@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateForecastParkageTable extends Migration
+class CreateCategorysTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,11 +12,10 @@ class CreateForecastParkageTable extends Migration
      */
     public function up()
     {
-        Schema::create('forecast_parkages', function (Blueprint $table) {
+        Schema::create('categorys', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
-            $table->string('tracking_number');
-
+            $table->string('description');
         });
     }
 
@@ -27,6 +26,6 @@ class CreateForecastParkageTable extends Migration
      */
     public function down()
     {
-        Schema::drop('forecast_parkages');
+        Schema::drop('categorys');
     }
 }
