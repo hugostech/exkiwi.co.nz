@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateForecastParkageTable extends Migration
+class AddStatusColumn extends Migration
 {
     /**
      * Run the migrations.
@@ -12,12 +12,8 @@ class CreateForecastParkageTable extends Migration
      */
     public function up()
     {
-        Schema::create('forecast_parkages', function (Blueprint $table) {
-            $table->increments('id');
-            $table->timestamps();
-            $table->string('tracking_number');
-            $table->float('value');
-
+        Schema::table('forecast_parkages', function (Blueprint $table) {
+            $table->enum('status',['forecast','warehouse','dispatch'])->nullable();
         });
     }
 
@@ -28,6 +24,8 @@ class CreateForecastParkageTable extends Migration
      */
     public function down()
     {
-        Schema::drop('forecast_parkages');
+        Schema::table('forecast_parkages', function (Blueprint $table) {
+            $table->dropColumn('status');
+        });
     }
 }

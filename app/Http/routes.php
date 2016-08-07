@@ -19,4 +19,6 @@ Route::auth();
 
 Route::get('/dashboard', 'HomeController@index');
 
+Route::post('/forecast_parkage','HomeController@forecast');
 //Route::get('/dashboard','')
+Route::get('/testdiff','HomeController@diffday');

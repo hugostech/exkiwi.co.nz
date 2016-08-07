@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateForecastParkageTable extends Migration
+class AddUserIdColumn extends Migration
 {
     /**
      * Run the migrations.
@@ -12,12 +12,8 @@ class CreateForecastParkageTable extends Migration
      */
     public function up()
     {
-        Schema::create('forecast_parkages', function (Blueprint $table) {
-            $table->increments('id');
-            $table->timestamps();
-            $table->string('tracking_number');
-            $table->float('value');
-
+        Schema::table('forecast_parkages', function (Blueprint $table) {
+            $table->integer('user_id')->nullable();
         });
     }
 
@@ -28,6 +24,8 @@ class CreateForecastParkageTable extends Migration
      */
     public function down()
     {
-        Schema::drop('forecast_parkages');
+        Schema::table('forecast_parkages', function (Blueprint $table) {
+            $table->dropColumn('user_id');
+        });
     }
 }

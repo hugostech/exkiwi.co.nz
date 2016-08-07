@@ -29,4 +29,8 @@ class User extends Authenticatable
         $this->attributes['password'] = bcrypt($value);
     }
 
+    public function forecasts(){
+        return $this->hasMany('App\Forecast_parkage','user_id');
+    }
+
 }

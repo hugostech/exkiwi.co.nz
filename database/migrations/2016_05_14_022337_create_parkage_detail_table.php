@@ -15,9 +15,10 @@ class CreateParkageDetailTable extends Migration
         Schema::create('parkage_details', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
-            $table->integer('category');
+            $table->integer('category')->nullable();
             $table->string('make');
             $table->string('detail');
+            $table->float('value');
         });
     }
 
