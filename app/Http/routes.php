@@ -18,6 +18,7 @@ Route::get('/', function () {
 Route::auth();
 
 Route::get('/dashboard', 'HomeController@index');
+Route::get('/top-up', 'HomeController@top_up');
 
 Route::post('/forecast_parkage','HomeController@forecast');
 //Route::get('/dashboard','')

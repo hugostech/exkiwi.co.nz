@@ -5,6 +5,7 @@
         <label>{{$user->name}}</label><br>
         {{$user->phone}}<br>
         {{$user->email}} <label><small style="color: green">Unactived</small></label><br>
+        Credit: <label>{{$user->point}}</label>
         <hr>
         <ul class="list-group">
             <a href="#" class="list-group-item active">My parkage</a>

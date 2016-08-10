@@ -35,8 +35,16 @@ class HomeController extends Controller
         $forecast = $user->forecasts->where('status','warehouse');
 
 
-
         return view($this->lg.'.index',compact('user','forecast'));
+    }
+
+    public function top_up(){
+
+        $user = Auth::user();
+
+
+        return view($this->lg.'.topup',compact('user'));
+
     }
 
     public function forecast(Request $request){
