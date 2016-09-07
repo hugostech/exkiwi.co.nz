@@ -33,4 +33,8 @@ class User extends Authenticatable
         return $this->hasMany('App\Forecast_parkage','user_id');
     }
 
+    public function address_rec(){
+        return $this->hasMany('App\Adress_rec','user_id');
+    }
+
 }

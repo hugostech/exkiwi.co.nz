@@ -19,7 +19,16 @@ Route::auth();
 
 Route::get('/dashboard', 'HomeController@index');
 Route::get('/top-up', 'HomeController@top_up');
+Route::post('/top_up', 'HomeController@top_up_process');
+
+Route::get('/address_chn','HomeController@address_chn');
+Route::get('/address_rec','HomeController@address_rec');
 
 Route::post('/forecast_parkage','HomeController@forecast');
 //Route::get('/dashboard','')
 Route::get('/testdiff','HomeController@diffday');
+
+Route::get('/rate/{code}','publicController@currency_rate');
+
+Route::post('/add_address','HomeController@add_address');
+Route::get('/del_address/{id}','HomeController@del_address');

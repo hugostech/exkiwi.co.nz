@@ -8,11 +8,12 @@
         Credit: <label>{{$user->point}}</label>
         <hr>
         <ul class="list-group">
-            <a href="#" class="list-group-item active">My parkage</a>
-            <a href="#" class="list-group-item">Chinese Address</a>
-            <a href="#" class="list-group-item">Your address book</a>
-            <a href="#" class="list-group-item">Finance Detail</a>
-            <a href="#" class="list-group-item">Account Setting</a>
+            <a href="{{url('dashboard')}}" class="list-group-item" id="index">My parkage</a>
+            <a href="{{url('address_chn')}}" class="list-group-item" id="chn_add">Chinese Address</a>
+            <a href="{{url('address_rec')}}" class="list-group-item" id="own_add">Your address book</a>
+            <a href="#" class="list-group-item" id="fin">Finance Detail</a>
+            <a href="#" class="list-group-item" id="acc">Account Setting</a>
         </ul>
+
     </div>
 </div>

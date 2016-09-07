@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddPointColumInUsers extends Migration
+class CreateExchangeRateTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,9 +12,11 @@ class AddPointColumInUsers extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->integer('point')->default(0);
-
+        Schema::create('exchange_rate', function (Blueprint $table) {
+            $table->increments('id');
+            $table->timestamps();
+            $table->string('code','10');
+            $table->float('rate')->default(0);
         });
     }
 
@@ -25,8 +27,6 @@ class AddPointColumInUsers extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('point');
-        });
+        Schema::drop('exchange_rate');
     }
 }

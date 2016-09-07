@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Transaction extends Migration
+class CreatePointRecordTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,15 +12,12 @@ class Transaction extends Migration
      */
     public function up()
     {
-        Schema::create('transactions', function (Blueprint $table) {
+        Schema::create('point_record', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
-            $table->float('amount');
-//            $table->enum('status',['pending','confirm']);
             $table->integer('point');
             $table->integer('user_id');
-            $table->string('ip')->nullable();
-            $table->string('card_type')->nullable();
+            $table->string('comment')->nullable();
         });
     }
 
@@ -31,6 +28,6 @@ class Transaction extends Migration
      */
     public function down()
     {
-        Schema::drop('transactions');
+        Schema::drop('point_record');
     }
 }

@@ -7,7 +7,7 @@
                 @include('en.partial.leftNav')
             </div>
             <div class="col-md-9">
-                @include('en.partial.top_up_rightPanel')
+                @include('en.partial.address_chn_rightPanel')
             </div>
         </div>
     </div>
