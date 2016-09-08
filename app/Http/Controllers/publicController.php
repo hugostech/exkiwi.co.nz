@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Rate;
+use App\User;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -27,5 +28,14 @@ class publicController extends Controller
             echo 1;
         }
 
+    }
+
+    public function getUserName($id){
+        $user = User::find($id);
+        if(isset($user->name)){
+            echo $user->name;
+        }else{
+            echo 'Error';
+        }
     }
 }

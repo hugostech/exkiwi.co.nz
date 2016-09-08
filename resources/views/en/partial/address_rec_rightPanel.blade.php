@@ -76,18 +76,81 @@
             </thead>
             <tbody>
             @foreach($addresses as $key=>$address)
+                <tr>
                 <td>{{$address->name}}</td>
                 <td>{{$address->street_number.' '.$address->route}}</td>
                 <td>{{$address->phone}}</td>
                 <td class="text-center">{{$address->locality}}</td>
                 <td class="text-center">{{$address->country}}</td>
-                <td><button type="button" class="btn btn-warning btn-xs">Edit</button>
+                <td>
+                    <button type="button" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#myModal{{$address->id}}">
+                        Edit
+                    </button>
                 <a href="{{url('del_address',[$address->id])}}" class="btn btn-danger btn-xs">Del</a> </td>
+                </tr>
             @endforeach
             </tbody>
 
         </table>
     </div>
+
+
+
+    @foreach($addresses as $address)
+            <!-- Modal -->
+    <!-- Modal -->
+    <div class="modal fade" id="myModal{{$address->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Edit Address</h4>
+                </div>
+                <div class="modal-body">
+
+                    {!! Form::model($address,['url'=>'edit_address/'.$address->id]) !!}
+                    {{Form::input('hidden','user_id',null)}}
+                        <div class="form-group">
+                            <label>Name</label>
+                            {!! Form::text('name',null,['class'=>'form-control','required']) !!}
+                        </div>
+                    <div class="form-group">
+                        <label>Phone</label>
+                        {!! Form::text('phone',null,['class'=>'form-control','required']) !!}
+                    </div>
+                        <div class="form-group">
+                            <label>Street number</label>
+                            {!! Form::text('street_number',null,['class'=>'form-control','required']) !!}
+                        </div>
+                        <div class="form-group">
+                            <label>Street</label>
+                            {!! Form::text('route',null,['class'=>'form-control','required']) !!}
+                        </div>
+                        <div class="form-group">
+                            <label>State</label>
+                            {!! Form::text('administrative_area_level_1',null,['class'=>'form-control']) !!}
+                        </div>
+                        <div class="form-group">
+                            <label>Zip code</label>
+                            {!! Form::text('postal_code',null,['class'=>'form-control']) !!}
+                        </div>
+                        <div class="form-group">
+                            <label>Country</label>
+                            {!! Form::text('country',null,['class'=>'form-control']) !!}
+                        </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+                {!! Form::close() !!}
+            </div>
+        </div>
+    </div>
+    <!-- END Modal -->
+    @endforeach
 
 
 

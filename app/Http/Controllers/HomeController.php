@@ -44,9 +44,9 @@ class HomeController extends Controller
     public function top_up(){
 
         $user = Auth::user();
+        $left_nav = 'top-up';
 
-
-        return view($this->lg.'.topup',compact('user'));
+        return view($this->lg.'.topup',compact('user','left_nav'));
 
     }
     /*
@@ -70,6 +70,12 @@ class HomeController extends Controller
 
     public function add_address(Request $request){
         Adress_rec::create($request->all());
+        return redirect('address_rec');
+    }
+
+    public function edit_address($id,Request $request){
+        $address = Adress_rec::find($id);
+        $address->update($request->all());
         return redirect('address_rec');
     }
 

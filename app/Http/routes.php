@@ -32,3 +32,9 @@ Route::get('/rate/{code}','publicController@currency_rate');
 
 Route::post('/add_address','HomeController@add_address');
 Route::get('/del_address/{id}','HomeController@del_address');
+Route::post('/edit_address/{id}','HomeController@edit_address');
+
+
+Route::get('/console','AdminController@package_console');
+
+Route::get('/getName/{id}','publicController@getUserName');

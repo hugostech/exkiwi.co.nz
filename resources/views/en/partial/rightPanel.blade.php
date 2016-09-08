@@ -3,9 +3,9 @@
         <div class="col-md-12 page-header">
             <div class="col-sm-4">
                 <div class="btn-group" role="group" aria-label="...">
-                    <button type="button" class="btn btn-default">Order</button>
-                    <button type="button" class="btn btn-default">in Warehouse</button>
-                    <button type="button" class="btn btn-default">Finish</button>
+                    <a href="#warehouse" class="btn btn-default" aria-controls="warehouse" role="tab" data-toggle="tab">In Warehouse</a>
+                    <a href="#order" class="btn btn-default" aria-controls="order" role="tab" data-toggle="tab">Order</a>
+                    <a href="#finish" class="btn btn-default" aria-controls="finish" role="tab" data-toggle="tab">Finish</a>
                 </div>
             </div>
             <div class="col-sm-8">
@@ -27,14 +27,27 @@
     <div class="panel-body">
         Forecast :{{count($forecast)}}
 
-        <div class="jumbotron">
-            <div class="container">
-                asdasd
+
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="warehouse">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th class="col-md-3">Arrived Date</th>
+                        <th class="col-md-3">Ship Trace</th>
+                        <th class="col-md-2">Value</th>
+                        <th class="col-md-2">Status</th>
+                        <th class="col-md-2">Action</th>
+                    </tr>
+                    </thead>
+                </table>
             </div>
+            <div role="tabpanel" class="tab-pane" id="order">order</div>
+            <div role="tabpanel" class="tab-pane" id="finish">finish</div>
+
         </div>
-        <table class="table table-bordered">
-            <tr><td>asd</td></tr>
-        </table>
+
+
     </div>
 
 
