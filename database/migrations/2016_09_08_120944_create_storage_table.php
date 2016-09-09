@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CraeteServiceTable extends Migration
+class CreateStorageTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,13 +12,14 @@ class CraeteServiceTable extends Migration
      */
     public function up()
     {
-        Schema::create('service', function (Blueprint $table) {
+        Schema::create('storage', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
-            $table->integer('credit');
-            $table->string('content');
-            $table->integer('status')->default(1);
-            $table->integer('position');
+            $table->string('shelf');
+            $table->string('level');
+            $table->string('position');
+            $table->integer('status')->default(0);
+            $table->integer('parkage_in_id')->nullable();;
         });
     }
 
@@ -29,6 +30,6 @@ class CraeteServiceTable extends Migration
      */
     public function down()
     {
-        Schema::drop('service');
+        Schema::drop('storage');
     }
 }

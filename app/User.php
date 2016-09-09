@@ -37,4 +37,8 @@ class User extends Authenticatable
         return $this->hasMany('App\Adress_rec','user_id');
     }
 
+    public function parkages(){
+        return $this->hasMany('App\Parkage_received','user_id');
+    }
+
 }

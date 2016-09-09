@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Adress_rec;
+use App\Category;
 use App\Forecast_parkage;
 use App\Http\Requests;
 use App\Parkage_details;
 use App\Pointrecord;
 use App\Rate;
+use App\Service;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -37,8 +39,14 @@ class HomeController extends Controller
 
         $forecast = $user->forecasts->where('status','warehouse');
 
+        $services = Service::where('poistion',1)->orwhere('poistion',2)->where('status',1)->get();
+
+        $categorys = Category::all();
+
+        $parkages = $user->parkages;
+
         $left_nav = 'index';
-        return view($this->lg.'.index',compact('user','forecast','left_nav'));
+        return view($this->lg.'.index',compact('user','forecast','left_nav','services','categorys','parkages'));
     }
 
     public function top_up(){
@@ -139,9 +147,11 @@ class HomeController extends Controller
         $user = Auth::user();
         $track = $request->input('track');
         $forecast = new Forecast_parkage();
-        $forecast->tracking_number = $track;
+        $forecast->tracking_number = strtoupper($track);
         $forecast->user_id = $user->id;
         $forecast->value = 0;
+//        dd(json_encode($request->input('service')));
+        $forecast->service=json_encode($request->input('service'));
         $forecast->save();
 
         for($i = 1; $i <= $length; $i++){
@@ -151,7 +161,7 @@ class HomeController extends Controller
             $item->detail = $request->input("detail")[$i];
             $item->make = $request->input("brand")[$i];
             $item->category = $request->input("category")[$i];
-            $item->status = 'forecast';
+//            $item->status = 'forecast';
             $item->save();
         }
 

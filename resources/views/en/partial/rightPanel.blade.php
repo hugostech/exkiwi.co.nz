@@ -33,13 +33,26 @@
                 <table class="table table-bordered">
                     <thead>
                     <tr>
-                        <th class="col-md-3">Arrived Date</th>
+                        <th class="col-md-1"></th>
+                        <th class="col-md-2">Arrived Date</th>
                         <th class="col-md-3">Ship Trace</th>
-                        <th class="col-md-2">Value</th>
-                        <th class="col-md-2">Status</th>
+                        <th class="col-md-1">Value</th>
+                        <th class="col-md-3">Status</th>
                         <th class="col-md-2">Action</th>
                     </tr>
                     </thead>
+                    <tbody>
+                    @foreach($parkages as $parkage)
+                        <tr>
+                            <td>{!! Form::input('checkbox','batchSelect[]',$parkage->id) !!}</td>
+                            <td>{{$parkage->created_at}}</td>
+                            <td>{{$parkage->track_number}}</td>
+                            <td>{{isset($parkage->value)?$parkage->value:'unknown'}}</td>
+                            <td>{{$parkage->status}}</td>
+                            <td><button type="button" class="btn btn-warning">Edit</button> </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
                 </table>
             </div>
             <div role="tabpanel" class="tab-pane" id="order">order</div>
@@ -80,8 +93,9 @@
                         <tr class="item hidden tem_item">
                             <td>
                                 <select class="form-control" name="category[]">
-                                    <option value="1">化妆品</option>
-                                    <option value="2">保健品</option>
+                                    @foreach($categorys as $category)
+                                        <option value="{{$category->id}}">{{$category->description}}</option>
+                                    @endforeach
                                 </select>
                             </td>
                             <td>
@@ -99,8 +113,11 @@
 
                             <td>
                                 <select class="form-control" name="category[]">
-                                    <option value="1">化妆品</option>
-                                    <option value="2">保健品</option>
+                                    @foreach($categorys as $category)
+                                        <option value="{{$category->id}}">{{$category->description}}</option>
+                                    @endforeach
+
+
                                 </select>
                             </td>
                             <td>
@@ -115,6 +132,14 @@
                             <td><button class="btn btn-primary btn-block" onclick="addone()">Add</button> </td>
                         </tr>
                         </tbody>
+                    </table>
+                    <table>
+                        <tr>
+                            @foreach($services as $service)
+                                <td>{!! Form::input('checkbox','service[]',$service->id) !!} <label>{{$service->content}}</label> </td>
+                            @endforeach
+
+                        </tr>
                     </table>
 
                 </div>

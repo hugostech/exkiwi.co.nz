@@ -36,5 +36,8 @@ Route::post('/edit_address/{id}','HomeController@edit_address');
 
 
 Route::get('/console','AdminController@package_console');
+Route::post('/entry_shipNo','AdminController@entry_shipNo');
 
 Route::get('/getName/{id}','publicController@getUserName');
+Route::get('/getforecast/{track_number}','publicController@getForecast');
+Route::get('/getspace/{number}','publicController@getspace');

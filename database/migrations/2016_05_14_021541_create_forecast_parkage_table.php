@@ -15,7 +15,7 @@ class CreateForecastParkageTable extends Migration
         Schema::create('forecast_parkages', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
-            $table->string('tracking_number');
+            $table->string('tracking_number')->unique();
             $table->float('value');
 
         });
