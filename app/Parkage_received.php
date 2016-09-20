@@ -13,4 +13,11 @@ class Parkage_received extends Model
     public function owner(){
         return $this->belongsTo('App\User','user_id');
     }
+
+    public function status(){
+        return $this->belongsTo('App\Parkage_status','status');
+    }
+    public function contents(){
+        return $this->hasMany('App\Parkage_received_content','parkage_in_id');
+    }
 }

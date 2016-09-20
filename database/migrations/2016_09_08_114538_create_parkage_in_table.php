@@ -18,7 +18,7 @@ class CreateParkageInTable extends Migration
 
             $table->integer('user_id');
             $table->string('track_number');
-            $table->string('status')->default('wait for report parkage detail');
+            $table->integer('status')->default(1);
             $table->float('value')->nullable();
             $table->string('service')->nullable();
         });

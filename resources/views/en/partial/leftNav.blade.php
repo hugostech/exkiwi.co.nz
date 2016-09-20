@@ -17,3 +17,8 @@
 
     </div>
 </div>
+<script>
+    $(function(){
+        $("#{{$left_nav}}").addClass("active");
+    });
+</script>

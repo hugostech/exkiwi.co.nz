@@ -7,6 +7,9 @@ use App\Category;
 use App\Forecast_parkage;
 use App\Http\Requests;
 use App\Parkage_details;
+use App\Parkage_received;
+use App\Parkage_received_content;
+use App\Parkage_status;
 use App\Pointrecord;
 use App\Rate;
 use App\Service;
@@ -46,9 +49,71 @@ class HomeController extends Controller
         $parkages = $user->parkages;
 
         $left_nav = 'index';
-        return view($this->lg.'.index',compact('user','forecast','left_nav','services','categorys','parkages'));
+
+        $status = self::parkage_status();
+        return view($this->lg.'.index',compact('user','forecast','left_nav','services','categorys','parkages','status'));
     }
 
+    private function parkage_status(){
+        $status = Parkage_status::where('status',1)->get();
+        $result = array();
+        foreach($status as $item){
+            $result[$item->id]=$item->content;
+        }
+        return $result;
+    }
+
+    public function parkage_edit(Request $request){
+
+        $parkage = Parkage_received::find($request->input('parkage_id'));
+        $contents = $parkage->contents;
+        foreach($contents as $item){
+            $item->delete();
+        }
+        $length = count($request->input('value'))-1;
+        $total = 0;
+
+        for($i = 1; $i <= $length; $i++){
+            if(empty($request->input("category")[$i]) || empty($request->input("detail")[$i])){
+                continue;
+            }
+            $item = new Parkage_received_content();
+            $item->parkage_in_id = $request->input('parkage_id');
+            $item->value = $request->input("value")[$i];
+            $item->content = $request->input("detail")[$i];
+            $item->make = $request->input("brand")[$i];
+            $item->category_id = $request->input("category")[$i];
+
+            $item->save();
+            $total+=$request->input("value")[$i];
+        }
+        $parkage->status = 2;
+        $parkage->value = $total;
+        $parkage->save();
+        return redirect('/dashboard');
+    }
+    public function show_parkage_edit($id){
+        $user = Auth::user();
+
+        $parkage  = Parkage_received::find($id);
+
+        if($parkage->user_id != $user->id){
+            echo 'Cannot found';
+            exit;
+        }
+
+        $left_nav = 'edit_parkage';
+
+        $category = Category::all();
+        $categorys = array();
+        foreach($category as $item){
+            $categorys[$item->id]=$item->description;
+        }
+
+        $parkageContent = $parkage->contents;
+
+        return view($this->lg.'.edit_parkage',compact('user','left_nav','parkageContent','categorys','parkage'));
+    }
     public function top_up(){
 
         $user = Auth::user();
@@ -75,6 +140,53 @@ class HomeController extends Controller
         return view($this->lg.'.address_rec',compact('user','left_nav','addresses'));
     }
 
+    /*
+     * show select address page*/
+    public function selectAddress(Request $request){
+        $user = Auth::user();
+        $addresses = $user->address_rec;
+        $parkage_id = json_encode($request->input('parkage_id'));
+        $services = json_encode($request->input('services'));
+
+
+        return view($this->lg.'.selectAddress',compact('user','addresses','parkage_id','services'));
+    }
+    public function selectService(Request $request){
+
+    }
+
+    public function selectcarrier(Request $request){
+//        $couriers =
+        $user = Auth::user();
+        $services = $request->input('services');
+        $parkages = $request->input('parkages');
+        $address_id = $request->input('address_id');
+        return view($this->lg.'.selectCourier',compact('user','address_id','parkages','services'));
+
+    }
+
+    private function courierCalculate($weight){
+
+    }
+
+    public function orderReview(Request $request){
+//        return view($this->lg.'.orderReview',compact('user','address_id','parkages','services'));
+        return view($this->lg.'.orderReview');
+    }
+
+    public function selectServiceSingle($id){
+        $parkage = Parkage_received::find($id);
+        $parkage_contents = $parkage->contents;
+        $parkages = array();
+        $parkages[] = compact('parkage','parkage_contents');
+        return self::showService($parkages);
+
+    }
+
+    private function showService($parkages){
+        $services = Service::where('position',2)->where('status',1)->get();
+        return view($this->lg.'.selectService',compact('parkages','services'));
+    }
 
     public function add_address(Request $request){
         Adress_rec::create($request->all());
@@ -161,6 +273,7 @@ class HomeController extends Controller
             $item->detail = $request->input("detail")[$i];
             $item->make = $request->input("brand")[$i];
             $item->category = $request->input("category")[$i];
+            $item->quantity = $request->input("quantity")[$i];
 //            $item->status = 'forecast';
             $item->save();
         }

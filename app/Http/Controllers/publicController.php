@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Forecast_parkage;
+use App\Parkage_received;
 use App\Rate;
 use App\Service;
 use App\storage;
@@ -99,6 +100,12 @@ class publicController extends Controller
 //    dd(urlencode($serviceContent));
 
 
+
+    }
+
+    public function getParkageContent($id){
+        $parkage = Parkage_received::find($id);
+        $contents = $parkage->contents;
 
     }
 }
