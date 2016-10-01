@@ -79,8 +79,12 @@ class publicController extends Controller
         if(count($forecast)>0){
             $user = $forecast->owner;
             $serviceContent = '';
-            if(!empty($forecast->service)){
-                $service_Ids = json_decode($forecast->service,true);
+            $services = $forecast->service;
+            $services = json_decode($services,true);
+
+            if(!empty($services)){
+
+                $service_Ids = $services;
 
                 foreach($service_Ids as $id){
                     $service = Service::find($id);

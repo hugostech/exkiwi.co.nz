@@ -67,7 +67,7 @@
     <tr class="item">
 
         <td>
-            {!! Form::select('category[]', $categorys, null, ['placeholder' => 'Pick a size...','class'=>'form-control']) !!}
+            {!! Form::select('category[]', $categorys, null, ['placeholder' => 'Pick a category...','class'=>'form-control']) !!}
 
         </td>
         <td>
@@ -91,7 +91,8 @@
 
 
 <div class="form-group">
-    {!! Form::submit('Save',['class'=>'btn btn-success btn-block']) !!}
+    <button class="btn btn-default col-sm-5" onclick="window.history.back()">Back</button>
+    {!! Form::submit('Save',['class'=>'btn btn-success col-sm-5 col-sm-offset-2']) !!}
 
 </div>
 {!! Form::close() !!}

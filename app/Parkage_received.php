@@ -20,4 +20,8 @@ class Parkage_received extends Model
     public function contents(){
         return $this->hasMany('App\Parkage_received_content','parkage_in_id');
     }
+
+    public function services(){
+        return $this->belongsToMany('App\Service','parkage_services','parkage_id','service_id');
+    }
 }

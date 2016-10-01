@@ -36,11 +36,12 @@
         <div class="sr-only" id="parkage_found">
             <p class="text-danger">Parkage found!</p>
             Name:<label>@{{parkage_name}}</label><br>
-            Service:<label>@{{ service }}</label>
+            Service:<label>@{{ service }}</label><br>
         </div>
         <div class="sr-only" id="space_ca">
             <div class="input-group">
                 {!! Form::input('number','space',null,['placeholder'=>'How many cube do you need','class'=>'form-control','ng-model'=>'space_need']) !!}
+                Space:
                 <span class="input-group-btn">
                     <button type="button" class="btn btn-default" ng-click="getSpace()">Get</button>
                 </span>

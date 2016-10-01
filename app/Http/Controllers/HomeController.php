@@ -40,11 +40,12 @@ class HomeController extends Controller
     {
         $user = Auth::user();
 
-        $forecast = $user->forecasts->where('status','warehouse');
+        $forecast = $user->forecasts;
 
-        $services = Service::where('poistion',1)->orwhere('poistion',2)->where('status',1)->get();
 
-        $categorys = Category::all();
+        $services = Service::where('position',1)->where('status',1)->get();
+
+        $categorys = self::category2array();
 
         $parkages = $user->parkages;
 
@@ -83,9 +84,10 @@ class HomeController extends Controller
             $item->content = $request->input("detail")[$i];
             $item->make = $request->input("brand")[$i];
             $item->category_id = $request->input("category")[$i];
+            $item->quantity = $request->input("quantity")[$i];
 
             $item->save();
-            $total+=$request->input("value")[$i];
+            $total+=$request->input("value")[$i]*$request->input("quantity")[$i];
         }
         $parkage->status = 2;
         $parkage->value = $total;
@@ -104,11 +106,9 @@ class HomeController extends Controller
 
         $left_nav = 'edit_parkage';
 
-        $category = Category::all();
-        $categorys = array();
-        foreach($category as $item){
-            $categorys[$item->id]=$item->description;
-        }
+
+        $categorys = $categorys = self::category2array();
+
 
         $parkageContent = $parkage->contents;
 
@@ -151,9 +151,7 @@ class HomeController extends Controller
 
         return view($this->lg.'.selectAddress',compact('user','addresses','parkage_id','services'));
     }
-    public function selectService(Request $request){
 
-    }
 
     public function selectcarrier(Request $request){
 //        $couriers =
@@ -170,8 +168,35 @@ class HomeController extends Controller
     }
 
     public function orderReview(Request $request){
-//        return view($this->lg.'.orderReview',compact('user','address_id','parkages','services'));
-        return view($this->lg.'.orderReview');
+//        dd($request->all());
+        $address = Adress_rec::find($request->input('address_id'));
+        $parkages = json_decode($request->input('parkages'),true);
+        $servers = json_decode($request->input('services'),true);
+        $contents = array();
+        $total = 0;
+        foreach($parkages as $i){
+            $parkage = Parkage_received::find($i);
+            $items = $parkage->contents;
+            foreach($items as $item){
+                $contents[] = $item;
+                $total+=$item->value*$item->quantity;
+            }
+
+        }
+        $total=number_format($total, 2);
+        return view($this->lg.'.orderReview',compact('address','contents','total'));
+    }
+
+    public function selectService(Request $request){
+        $ids = $request->batchSelect;
+        $parkages = array();
+        foreach($ids as $id){
+            $parkage = Parkage_received::find($id);
+            $parkage_contents = $parkage->contents;
+            $parkages[] = compact('parkage','parkage_contents');
+        }
+        return self::showService($parkages);
+
     }
 
     public function selectServiceSingle($id){
@@ -280,6 +305,14 @@ class HomeController extends Controller
 
         return redirect('/dashboard');
 
+    }
+    private function category2array(){
+        $category = Category::all();
+        $categorys = array();
+        foreach($category as $item){
+            $categorys[$item->id]=$item->description;
+        }
+        return $categorys;
     }
 
 

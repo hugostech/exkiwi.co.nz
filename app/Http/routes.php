@@ -30,7 +30,7 @@ Route::get('/parkage_edit/{id}','HomeController@show_parkage_edit');
 Route::get('/getParkageContent/{id}','publicController@getParkageContent');
 //Route::get('/shipParkage/{id}','HomeController@selectAddress');
 Route::get('/service/{id}','HomeController@selectServiceSingle');
-Route::post('/service','HomeController@selectService');
+Route::post('/multi-parkage','HomeController@selectService');
 Route::post('/next_ship','HomeController@selectAddress');
 Route::post('/next_carrier','HomeController@selectcarrier');
 Route::post('/order_review','HomeController@orderReview');

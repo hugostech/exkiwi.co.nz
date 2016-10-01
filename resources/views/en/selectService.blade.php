@@ -25,12 +25,12 @@
                            <div class="panel panel-default">
                                <div class="panel-heading" role="tab" id="headingOne">
                                    <h4 class="panel-title">
-                                       <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                       <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{$item['parkage']->id}}" aria-expanded="true" aria-controls="collapseOne">
                                            {{$item['parkage']->track_number}}<small> Value: {{$item['parkage']->value}}</small>
                                        </a>
                                    </h4>
                                </div>
-                               <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                               <div id="collapse{{$item['parkage']->id}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                                    <div class="panel-body">
                                        <table class="table">
                                            <thead>
